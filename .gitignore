@@ -14,3 +14,13 @@ coverage/
 .DS_Store
 .idea/
 .vscode/
+
+# Estado privado de ejecución y evidencia local
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+.local/
+.artifacts/
+playwright-report/
+test-results/

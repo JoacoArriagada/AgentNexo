@@ -1,0 +1,30 @@
+{
+  "name": "agentnexo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.18.0 <25",
+    "npm": ">=11"
+  },
+  "workspaces": [
+    "frontend",
+    "backend",
+    "packages/api-contracts"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @agentnexo/api-contracts && node scripts/dev.mjs",
+    "dev:frontend": "npm run dev -w @agentnexo/frontend",
+    "dev:backend": "npm run dev -w @agentnexo/backend",
+    "build": "npm run build -w @agentnexo/api-contracts && npm run build -w @agentnexo/backend && npm run build -w @agentnexo/frontend",
+    "typecheck": "npm run build -w @agentnexo/api-contracts && npm run typecheck -w @agentnexo/backend && npm run typecheck -w @agentnexo/frontend",
+    "test": "npm run build -w @agentnexo/api-contracts && npm run test -w @agentnexo/backend",
+    "test:e2e": "playwright test",
+    "demo:reset": "node scripts/reset-demo.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
+  }
+}

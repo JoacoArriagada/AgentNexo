@@ -1,11 +1,20 @@
 # AgentNexo
 
-Consulta el README raíz y `docs/` antes de proponer cambios. El producto vende un servicio/paquete por trabajo con alcance, presupuesto y permisos; la cantidad de agentes es una decisión interna.
+Alcance vigente desde 2026-10-12: prototipo local implementado. Lee README.md,
+reglamentario.md, .specify/memory/constitution.md y specs/ antes de cambiar código.
+Las instrucciones históricas de sólo documentación fueron sustituidas por la petición
+explícita del responsable. Su copia está en docs/history/.
 
-El MVP documental es una revisión estática de JavaScript/TypeScript con dos agentes y dos servicios HTTP demostrativos. No ejecutes código del cliente. Mantén tareas, contenido y modelos fuera de Stellar. Usa Testnet en la demostración.
+Mantén frontend/ y backend/ independientes, módulos por funcionalidad y DTO públicos
+en packages/api-contracts/. Evita capas vacías y servicios externos innecesarios.
+No añadas login, credenciales, wallet, dominio, pagos reales, LLM remoto obligatorio ni
+infraestructura distribuida al prototipo local. Los actores demo no autentican usuarios.
 
-Separa factura de modelos, pagos a proveedores y comisiones. Las APIs tradicionales requieren controles de aplicación. Un registro on-chain posterior no limita un pago x402: la compatibilidad de contrato, firma, SDK y facilitator está pendiente hasta demostrar el flujo integrado.
+No ejecutes código recibido. Conserva evidencia de archivo/línea, límites de entrada,
+aceptación versionada, snapshots, idempotencia durable y reservas exactas. No sumes
+USD/USDC/XLM ni el precio retenido con consumos. No liberes incertidumbre por timeout.
+Casos propuestos nunca son pruebas ejecutadas; desconocer un criterio no lo satisface.
 
-No entregues claves a modelos/agentes. Respeta permisos y reservas atómicas, no liberes pagos inciertos, no inventes resultados, integraciones ni precios. LangGraph y OpenRouter son opciones pendientes.
-
-Conserva el README sin cambios salvo solicitud explícita. Lee el estado Git, preserva otras ramas/cambios y no uses reescrituras destructivas. Declara lo verificado y lo pendiente por separado.
+Lee git status y preserva trabajo ajeno. No hagas reescrituras destructivas ni publiques
+sin autorización. Ejecuta build y pruebas pertinentes; documenta resultados reales y
+limitaciones. Docker Compose existe; su arranque no fue comprobado en este equipo sin Docker.

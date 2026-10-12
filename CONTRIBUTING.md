@@ -1,18 +1,20 @@
-# Contribuir
+# Contribuir a AgentNexo
 
-El README raíz describe el estado público del proyecto y se mantiene sin cambios en tareas que no solicitan editarlo.
+El alcance vigente es el prototipo local descrito en README.md y reglamentario.md.
+La constitución y specs/ contienen los requisitos, decisiones y tareas de cada módulo.
+Los documentos de la fase Figma del 10 de octubre se conservan como antecedentes.
 
-## Ramas
+Mantén frontend/ y backend/ separados y los contratos públicos sin dependencias de servidor.
+Organiza cada aplicación por funcionalidades. Añade capas y bibliotecas sólo para necesidades
+concretas; no introduzcas servicios externos, login, credenciales ni pagos reales al demo.
 
-- `main`: base estable.
-- `develop`: integración.
-- `feature/<nombre>`: trabajo nuevo, creado desde `develop` y enviado de vuelta a `develop` para revisión.
-- `feature/develop`: rama inicial acordada para continuar el MVP.
+Para cambios de comportamiento, ajusta spec/plan/tasks pertinentes y registra aclaraciones.
+Usa pruebas de invariantes y recorridos, y ejecuta npm run build, npm test y los E2E afectados.
+La verificación local no acredita integraciones de producción, pruebas de IA o blockchain.
 
-No fuerces ni elimines ramas compartidas. Revisa el estado y preserva cambios locales antes de comenzar.
+Conserva ramas y cambios ajenos; no fuerces, borres ni publiques sin autorización aplicable.
+Si hace falta una rama nueva usa codex/, salvo instrucción explícita. No crees ramas sólo
+por editar documentación. Los comandos de pruebas usan bases aisladas de los datos demo.
 
-## Cambios
-
-Mantén este repositorio documental hasta que se apruebe la implementación. No afirmes que una ruta, herramienta, SDK, pago o prueba funciona sin evidencia. Actualiza la arquitectura, el presupuesto o el plan si cambia una decisión. Mantén secretos, claves y archivos `.env` fuera de Git.
-
-Para cambios documentales verifica enlaces locales y coherencia. Para futuras modificaciones de código ejecuta únicamente las comprobaciones existentes y pertinentes; no inventes comandos de prueba.
+No incorpores código privado de usuarios, bases locales o resultados de ejecución al Git.
+La propuesta Word y la ERS son fuentes externas; modificar Markdown no las actualiza.

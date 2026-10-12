@@ -1,14 +1,27 @@
-# Plan de desarrollo
+# Diseño actual y plan futuro
 
-**Estado inicial:** documentación preparada. Cada etapa de implementación permanece pendiente.
+Estado al 10 de octubre de 2026: solo requerimientos y Figma. Se retiró el código anterior. P1/P2 y despliegue son propuestas futuras, sin autorización para programarlas ahora. La [revisión crítica](scope-and-critical-review.md) define mínimos y exclusiones; evita que la integración contractual bloquee comprobar la utilidad de la revisión.
 
-| Etapa | Trabajo | Evidencia para darla por verificada |
+| Etapa | Dependencia | Salida necesaria |
 | --- | --- | --- |
-| 1. Validar problema | Entrevistar cinco desarrolladores/agencias sobre frecuencia, presupuesto, proveedores y disposición a pagar. | Notas anonimizadas y decisión de continuar/ajustar el paquete. |
-| 2. Viabilidad de pago | Fijar versiones x402/Stellar/Rust/wallet/facilitator; probar cuenta, firma, `/verify`, `/settle`, token de prueba y reglas de gasto. | Compra, rechazo contractual por exceso y por destinatario, autorización expirada y carrera documentados con hashes/estados Testnet. Si no hay control on-chain, declarar el control de aplicación y autoridad de la clave. |
-| 3. Base local | Web sencilla, API Node.js/TypeScript, persistencia SQLite, configuración local y estados de trabajo. | Crear y recuperar trabajo; importes exactos; reservas concurrentes en transacción. Sin pagos reales. |
-| 4. Broker y servicios A/B | Autorizar destinos/máximos; un endpoint por servicio; reserva antes de firmar. | Con 0,05 USDC Testnet, A compra 0,03 y B se rechaza a 0,03; con otro trabajo de 0,06 ambos compran. Rechazar 0,04 si el máximo por operación es 0,03. |
-| 5. Agentes e informe | Dos roles con máximo de cuatro llamadas por agente y un reintento; hasta dos simultáneos. | Informe estático útil, dos proveedores distinguibles, límites y estados visibles. No ejecutar archivos del cliente. |
-| 6. Recorrido y preparación de demo | Tratar duplicados, timeout/reinicio, pago confirmado sin entrega y saldos por categoría. | Evidencia reproducible; confirmados/reservados/disponibles coinciden; ninguna compra duplicada. |
+| **P0. Diseño** | Alcance y arquitectura | Figma editable y conectado: acceso/recuperación, Inicio, revisiones, autorización, ejecución, gastos, actividad, informes, notificaciones, confirmaciones, móvil y esqueletos. Verificación visual y de enlaces; sin build o código. |
+| **P1a. Modelo y evaluación** | Casos estáticos anotados | 20 módulos y comparación de una llamada frente a dos roles; tres repeticiones, métricas y puertas de calidad. Elegir modelo, tarifas, límites de tokens y privacidad. Sin configuración válida, NOT_READY. |
+| **P1b. API, identidad y persistencia** | Contratos y P1a para inferencia | DTO validado, sesión del responsable, SQLite real, migraciones, permisos por recurso, almacenamiento privado y backup/restore. Pruebas de entradas adversarias y límites. |
+| **P1c. Ejecución y consumo** | P1a + P1b | Reservar costo de modelo, ejecutar la variante elegida por evaluación (base: single-pass), validar salidas/criterios, generar informe, cancelar y recuperar sin llamadas duplicadas. A/B deshabilitados en single-pass. Medir utilidad antes de añadir autonomía. |
+| **P1d. Web conectada** | P1b + P1c | Construir desde el diseño y contratos HTTP; sesión, recuperación, notificaciones, polling cancelable, errores y retención reales. Mantener fronteras y rotular cualquier modo demo. |
+| **P2a. Spike x402/Stellar** | Configuración Testnet y amenazas | Compra, rechazo y conciliación con SDK compatibles y facilitator existente. G-account dedicada es base válida con control en aplicación; C-account requiere evidencia adicional. Puede avanzar en paralelo a P1. |
+| **P2b. Broker y A/B** | P1b + P2a | Transacciones de reservas, idempotencia, proveedores/destinos distintos, fixture público y entrega recuperable. No enviar archivos propios a herramientas no aplicables. |
+| **P2c. Demostración integrada** | P1d + P2b | Compra real, rechazo previo a firma, carrera 0,03 + 0,03 contra 0,05, replay, timeout, pago sin entrega, cancelación y recuperación con hashes y evidencia sin secretos. |
+| **Despliegue privado** | P1 + P2 aceptados y configuración segura | Una instancia backend, volumen local fuera de OneDrive, estáticos web, A/B separado, TLS, secretos y rollback. CI remoto y smoke tests. |
 
-No construir interfaz amplia antes de resolver la viabilidad y el modelo de confianza del pago. Versiones, precios del proveedor de IA, activo Testnet y facilitator se revalidan al implementar. No instalar dependencias ni presentar esta tabla como pruebas aprobadas.
+El producto completo de esta propuesta requiere P1 + P2. P0 no prueba ninguna integración real. Las entrevistas con posibles usuarios pueden avanzar en paralelo: validan demanda y lenguaje, no sustituyen evaluar precisión, costo y tiempo humano.
+
+## Puertas de decisión
+
+1. **Valor de dos roles:** conservar la separación en producto solo si supera la evaluación definida. Una arquitectura multiagente no es un resultado en sí.
+2. **Firma:** no afirmar control contractual sin liquidación y rechazo demostrados bajo intento de evasión. Mantener garantía de aplicación si se usa G-account.
+3. **Costo:** fijar cota de una llamada antes de ejecutarla; incertidumbre conserva reserva y factura excesiva no se oculta.
+4. **Persistencia:** SQLite local para una instancia; reevaluar PostgreSQL antes de múltiples escritores distribuidos.
+5. **Alcance:** no añadir sectores, ejecución de código, marketplace ni más agentes para compensar calidad insuficiente.
+
+Si se autoriza construir, cada etapa deberá añadir implementación, pruebas pertinentes y documentación en el mismo cambio. La [matriz de aceptación](requirements-and-acceptance.md) exige evidencia real; [operación](quality-and-operations.md) define recuperación. Los manifiestos, un mock y un HTTP 200 aislado no completan una etapa.
